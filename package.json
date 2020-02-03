@@ -1,0 +1,63 @@
+{
+  "name": "botble-graphql",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Botble GraphQL",
+  "scripts": {
+    "dev": "ts-node-dev --ignore-watch types.d.ts --no-notify --respawn --transpileOnly index.ts",
+    "build": "tsc",
+    "start": "NODE_ENV=production node dist",
+    "lint": "eslint --ignore-path .gitignore --ignore-path .prettierignore",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "dependencies": {
+    "graphql": "14.5.8",
+    "graphql-yoga": "^1.18.3",
+    "nexus": "^0.12.0-rc.9"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@types/node": "^13.7.0",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^4.2.1",
+    "lint-staged": "^10.0.7",
+    "prettier": "^1.19.1",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.7.5"
+  },
+  "engines": {
+    "node": ">= 13.3.0"
+  },
+  "repository": {
+    "type": "git+ssh",
+    "url": "git@github.com:botble/graphql.git"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{md,json,graphql}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{js,ts}": [
+      "npm run lint:fix --",
+      "git add"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "author": "Nghiep <me@nghiepit.dev>",
+  "license": "ISC"
+}
