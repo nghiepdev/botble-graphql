@@ -9,5 +9,6 @@ export const Gallery = objectType({
     t.string('description', {
       nullable: true,
     });
+    t.string('image');
   },
 });

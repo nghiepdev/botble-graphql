@@ -33,6 +33,7 @@ type Gallery implements Node {
   Unique identifier for the resource
   """
   id: ID!
+  image: String!
   name: String!
   slug: String!
 }
@@ -42,6 +43,31 @@ interface Node {
   Unique identifier for the resource
   """
   id: ID!
+}
+
+"""
+PageInfo cursor, as defined in https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo
+"""
+type PageInfo {
+  """
+  The cursor corresponding to the last nodes in edges. Null if the connection is empty.
+  """
+  endCursor: String
+
+  """
+  Used to indicate whether more edges exist following the set defined by the clients arguments.
+  """
+  hasNextPage: Boolean!
+
+  """
+  Used to indicate whether more edges exist prior to the set defined by the clients arguments.
+  """
+  hasPreviousPage: Boolean!
+
+  """
+  The cursor corresponding to the first nodes in edges. Null if the connection is empty.
+  """
+  startCursor: String
 }
 
 type Post implements Node {
@@ -59,8 +85,80 @@ type Post implements Node {
   slug: String!
 }
 
+type PostConnection {
+  """
+  https://facebook.github.io/relay/graphql/connections.htm#sec-Edge-Types
+  """
+  edges: [PostEdge]
+
+  """
+  Flattened list of Post type
+  """
+  nodes: [Post!]!
+
+  """
+  https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo
+  """
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type PostEdge {
+  """
+  https://facebook.github.io/relay/graphql/connections.htm#sec-Cursor
+  """
+  cursor: String!
+
+  """
+  https://facebook.github.io/relay/graphql/connections.htm#sec-Node
+  """
+  node: Post!
+}
+
 type Query {
+  categoryBySlug(slug: String!): Category!
   featuredListing(
+    """
+    The limit of results. Default 20
+    """
+    limit: Int = 20
+  ): [Post!]!
+  galleryListing(
+    """
+    The limit of results. Default 20
+    """
+    limit: Int = 20
+  ): [Gallery!]!
+  lastestListing(
+    """
+    The limit of results. Default 20
+    """
+    limit: Int = 20
+  ): [Post!]!
+  postConnectionByCategoryId(
+    """
+    Returns the elements in the list that come after the specified cursor
+    """
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor
+    """
+    before: String
+
+    """
+    Returns the first n elements from the list.
+    """
+    first: Int
+    id: Int!
+
+    """
+    Returns the last n elements from the list.
+    """
+    last: Int
+  ): PostConnection!
+  postsByCategoryId(id: Int!): [Post!]!
+  recentListing(
     """
     The limit of results. Default 20
     """
