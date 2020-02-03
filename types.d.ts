@@ -3,6 +3,26 @@
  * Do not make changes to this file directly
  */
 
+import {core} from 'nexus';
+declare global {
+  interface NexusGenCustomInputMethods<TypeName extends string> {
+    date<FieldName extends string>(
+      fieldName: FieldName,
+      opts?: core.ScalarInputFieldConfig<
+        core.GetGen3<'inputTypes', TypeName, FieldName>
+      >,
+    ): void; // "Date";
+  }
+}
+declare global {
+  interface NexusGenCustomOutputMethods<TypeName extends string> {
+    date<FieldName extends string>(
+      fieldName: FieldName,
+      ...opts: core.ScalarOutSpread<TypeName, FieldName>
+    ): void; // "Date";
+  }
+}
+
 declare global {
   interface NexusGen extends NexusGenTypes {}
 }
@@ -12,46 +32,124 @@ export interface NexusGenInputs {}
 export interface NexusGenEnums {}
 
 export interface NexusGenRootTypes {
+  Category: {
+    // root type
+    description?: string | null; // String
+    id: string; // ID!
+    name: string; // String!
+    slug: string; // String!
+  };
+  Gallery: {
+    // root type
+    description?: string | null; // String
+    id: string; // ID!
+    name: string; // String!
+    slug: string; // String!
+  };
   Post: {
     // root type
-    id: string; // String!
+    content?: string | null; // String
+    created_at: any; // Date!
+    description?: string | null; // String
+    id: string; // ID!
+    image?: string | null; // String
+    name: string; // String!
+    slug: string; // String!
   };
   Query: {};
+  Tag: {
+    // root type
+    description?: string | null; // String
+    id: string; // ID!
+    name: string; // String!
+    slug: string; // String!
+  };
+  Node:
+    | NexusGenRootTypes['Category']
+    | NexusGenRootTypes['Gallery']
+    | NexusGenRootTypes['Post']
+    | NexusGenRootTypes['Tag'];
   String: string;
   Int: number;
   Float: number;
   Boolean: boolean;
   ID: string;
+  Date: any;
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {}
 
 export interface NexusGenFieldTypes {
+  Category: {
+    // field return type
+    description: string | null; // String
+    id: string; // ID!
+    name: string; // String!
+    slug: string; // String!
+  };
+  Gallery: {
+    // field return type
+    description: string | null; // String
+    id: string; // ID!
+    name: string; // String!
+    slug: string; // String!
+  };
   Post: {
     // field return type
-    id: string; // String!
+    categories: NexusGenRootTypes['Category'][]; // [Category!]!
+    content: string | null; // String
+    created_at: any; // Date!
+    description: string | null; // String
+    id: string; // ID!
+    image: string | null; // String
+    name: string; // String!
+    slug: string; // String!
   };
   Query: {
     // field return type
     ok: string; // String!
   };
+  Tag: {
+    // field return type
+    description: string | null; // String
+    id: string; // ID!
+    name: string; // String!
+    slug: string; // String!
+  };
+  Node: {
+    // field return type
+    id: string; // ID!
+  };
 }
 
 export interface NexusGenArgTypes {}
 
-export interface NexusGenAbstractResolveReturnTypes {}
+export interface NexusGenAbstractResolveReturnTypes {
+  Node: 'Category' | 'Gallery' | 'Post' | 'Tag';
+}
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = 'Post' | 'Query';
+export type NexusGenObjectNames =
+  | 'Category'
+  | 'Gallery'
+  | 'Post'
+  | 'Query'
+  | 'Tag';
 
 export type NexusGenInputNames = never;
 
 export type NexusGenEnumNames = never;
 
-export type NexusGenInterfaceNames = never;
+export type NexusGenInterfaceNames = 'Node';
 
-export type NexusGenScalarNames = 'Boolean' | 'Float' | 'ID' | 'Int' | 'String';
+export type NexusGenScalarNames =
+  | 'Boolean'
+  | 'Date'
+  | 'Float'
+  | 'ID'
+  | 'Int'
+  | 'String';
 
 export type NexusGenUnionNames = never;
 
