@@ -3,7 +3,7 @@
  * Do not make changes to this file directly
  */
 
-import {core} from 'nexus';
+import {core, connectionPluginCore} from 'nexus';
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     date<FieldName extends string>(
@@ -12,6 +12,18 @@ declare global {
         core.GetGen3<'inputTypes', TypeName, FieldName>
       >,
     ): void; // "Date";
+    time<FieldName extends string>(
+      fieldName: FieldName,
+      opts?: core.ScalarInputFieldConfig<
+        core.GetGen3<'inputTypes', TypeName, FieldName>
+      >,
+    ): void; // "Time";
+    datetime<FieldName extends string>(
+      fieldName: FieldName,
+      opts?: core.ScalarInputFieldConfig<
+        core.GetGen3<'inputTypes', TypeName, FieldName>
+      >,
+    ): void; // "DateTime";
   }
 }
 declare global {
@@ -20,6 +32,18 @@ declare global {
       fieldName: FieldName,
       ...opts: core.ScalarOutSpread<TypeName, FieldName>
     ): void; // "Date";
+    time<FieldName extends string>(
+      fieldName: FieldName,
+      ...opts: core.ScalarOutSpread<TypeName, FieldName>
+    ): void; // "Time";
+    datetime<FieldName extends string>(
+      fieldName: FieldName,
+      ...opts: core.ScalarOutSpread<TypeName, FieldName>
+    ): void; // "DateTime";
+    connectionField<FieldName extends string>(
+      fieldName: FieldName,
+      config: connectionPluginCore.ConnectionFieldConfig<TypeName, FieldName>,
+    ): void;
   }
 }
 
@@ -49,7 +73,6 @@ export interface NexusGenRootTypes {
   Post: {
     // root type
     content?: string | null; // String
-    created_at: any; // Date!
     description?: string | null; // String
     id: string; // ID!
     image?: string | null; // String
@@ -65,9 +88,9 @@ export interface NexusGenRootTypes {
     slug: string; // String!
   };
   Node:
+    | NexusGenRootTypes['Post']
     | NexusGenRootTypes['Category']
     | NexusGenRootTypes['Gallery']
-    | NexusGenRootTypes['Post']
     | NexusGenRootTypes['Tag'];
   String: string;
   Int: number;
@@ -75,6 +98,8 @@ export interface NexusGenRootTypes {
   Boolean: boolean;
   ID: string;
   Date: any;
+  DateTime: any;
+  Time: any;
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {}
@@ -98,7 +123,7 @@ export interface NexusGenFieldTypes {
     // field return type
     categories: NexusGenRootTypes['Category'][]; // [Category!]!
     content: string | null; // String
-    created_at: any; // Date!
+    createdAt: any; // DateTime!
     description: string | null; // String
     id: string; // ID!
     image: string | null; // String
@@ -107,7 +132,7 @@ export interface NexusGenFieldTypes {
   };
   Query: {
     // field return type
-    ok: string; // String!
+    featuredListing: NexusGenRootTypes['Post'][]; // [Post!]!
   };
   Tag: {
     // field return type
@@ -122,10 +147,17 @@ export interface NexusGenFieldTypes {
   };
 }
 
-export interface NexusGenArgTypes {}
+export interface NexusGenArgTypes {
+  Query: {
+    featuredListing: {
+      // args
+      limit?: number | null; // Int
+    };
+  };
+}
 
 export interface NexusGenAbstractResolveReturnTypes {
-  Node: 'Category' | 'Gallery' | 'Post' | 'Tag';
+  Node: 'Post' | 'Category' | 'Gallery' | 'Tag';
 }
 
 export interface NexusGenInheritedFields {}
@@ -146,10 +178,12 @@ export type NexusGenInterfaceNames = 'Node';
 export type NexusGenScalarNames =
   | 'Boolean'
   | 'Date'
+  | 'DateTime'
   | 'Float'
   | 'ID'
   | 'Int'
-  | 'String';
+  | 'String'
+  | 'Time';
 
 export type NexusGenUnionNames = never;
 

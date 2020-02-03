@@ -1,10 +1,19 @@
-import {queryType} from 'nexus';
+import {queryField} from 'nexus';
+import {path} from 'ramda';
 
-export const Query = queryType({
-  definition(t) {
-    t.field('ok', {
-      type: 'String',
-      resolve: () => 'ok',
-    });
-  },
+import {limitArg} from './arguments';
+import {client} from '../helpers/fetcher';
+
+export const featuredListQuery = queryField(t => {
+  t.list.field('featuredListing', {
+    type: 'Post',
+    args: limitArg,
+    resolve(root, {limit}) {
+      return client
+        .get('posts/featured', {
+          searchParams: {limit},
+        })
+        .then(path(['body', 'data']));
+    },
+  });
 });

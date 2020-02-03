@@ -19,6 +19,13 @@ representation of dates and times using the Gregorian calendar.
 """
 scalar Date
 
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the
+`date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO
+8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
 type Gallery implements Node {
   description: String
 
@@ -40,7 +47,7 @@ interface Node {
 type Post implements Node {
   categories: [Category!]!
   content: String
-  created_at: Date!
+  createdAt: DateTime!
   description: String
 
   """
@@ -53,7 +60,12 @@ type Post implements Node {
 }
 
 type Query {
-  ok: String!
+  featuredListing(
+    """
+    The limit of results. Default 20
+    """
+    limit: Int = 20
+  ): [Post!]!
 }
 
 type Tag implements Node {
@@ -66,3 +78,10 @@ type Tag implements Node {
   name: String!
   slug: String!
 }
+
+"""
+A time string at UTC, such as 10:15:30Z, compliant with the `full-time` format
+outlined in section 5.6 of the RFC 3339profile of the ISO 8601 standard for
+representation of dates and times using the Gregorian calendar.
+"""
+scalar Time
