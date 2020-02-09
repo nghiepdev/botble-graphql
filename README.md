@@ -1,21 +1,36 @@
 # BOTBLE-GRAPHQL
 
-> Botble GraphQL
+[![](https://img.shields.io/docker/pulls/nghiepit/botble-graphql?label=botble-graphql&style=flat-square)](https://hub.docker.com/r/nghiepit/botble-graphql)
+[![](https://images.microbadger.com/badges/version/nghiepit/botble-graphql.svg)](https://hub.docker.com/r/nghiepit/botble-graphql)
+
+> The migration for [Botble](https://botble.toiyeulaptrinh.com) from Rest(Laravel) to GraphQL
 
 ## Prerequisites
 
-- [Docker Compose](https://docs.docker.com/compose/install)
+- [NodeJS](https://nodejs.org)
+- [Yarnpkg](https://yarnpkg.com)
+- [Docker](https://docker.com)
 
 ## Getting started
 
-- For development
+_Only for development environnement_
 
 ```bash
 $ yarn install
 $ yarn dev
 ```
 
-## Build setup
+## Build Docker image
+
+```bash
+$ docker build --build-arg APP_VERSION=0.0.1 -t nghiepit/botble-graphql:0.0.1 .
+```
+
+## Deploy Docker
+
+```bash
+$ docker run --restart=unless-stopped -p 4000:4000 -d nghiepit/botble-graphql:0.0.1
+```
 
 ## License
 
