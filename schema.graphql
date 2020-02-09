@@ -34,8 +34,14 @@ type Gallery implements Node {
   """
   id: ID!
   image: String!
+  images: [GalleryImage!]
   name: String!
   slug: String!
+}
+
+type GalleryImage {
+  full: String!
+  medium: String!
 }
 
 interface Node {
@@ -123,18 +129,20 @@ type Query {
     """
     limit: Int = 20
   ): [Post!]!
+  galleryBySlug(slug: String!): Gallery!
   galleryListing(
     """
     The limit of results. Default 20
     """
     limit: Int = 20
   ): [Gallery!]!
-  lastestListing(
+  newestListing(
     """
     The limit of results. Default 20
     """
     limit: Int = 20
   ): [Post!]!
+  postBySlug(slug: String!): Post!
   postConnectionByCategoryId(
     """
     Returns the elements in the list that come after the specified cursor

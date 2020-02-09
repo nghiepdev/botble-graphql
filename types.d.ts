@@ -76,6 +76,11 @@ export interface NexusGenRootTypes {
     name: string; // String!
     slug: string; // String!
   };
+  GalleryImage: {
+    // root type
+    full: string; // String!
+    medium: string; // String!
+  };
   PageInfo: {
     // root type
     endCursor?: string | null; // String
@@ -142,8 +147,14 @@ export interface NexusGenFieldTypes {
     description: string | null; // String
     id: string; // ID!
     image: string; // String!
+    images: NexusGenRootTypes['GalleryImage'][] | null; // [GalleryImage!]
     name: string; // String!
     slug: string; // String!
+  };
+  GalleryImage: {
+    // field return type
+    full: string; // String!
+    medium: string; // String!
   };
   PageInfo: {
     // field return type
@@ -179,8 +190,10 @@ export interface NexusGenFieldTypes {
     // field return type
     categoryBySlug: NexusGenRootTypes['Category']; // Category!
     featuredListing: NexusGenRootTypes['Post'][]; // [Post!]!
+    galleryBySlug: NexusGenRootTypes['Gallery']; // Gallery!
     galleryListing: NexusGenRootTypes['Gallery'][]; // [Gallery!]!
-    lastestListing: NexusGenRootTypes['Post'][]; // [Post!]!
+    newestListing: NexusGenRootTypes['Post'][]; // [Post!]!
+    postBySlug: NexusGenRootTypes['Post']; // Post!
     postConnectionByCategoryId: NexusGenRootTypes['PostConnection']; // PostConnection!
     postsByCategoryId: NexusGenRootTypes['Post'][]; // [Post!]!
     recentListing: NexusGenRootTypes['Post'][]; // [Post!]!
@@ -208,13 +221,21 @@ export interface NexusGenArgTypes {
       // args
       limit?: number | null; // Int
     };
+    galleryBySlug: {
+      // args
+      slug: string; // String!
+    };
     galleryListing: {
       // args
       limit?: number | null; // Int
     };
-    lastestListing: {
+    newestListing: {
       // args
       limit?: number | null; // Int
+    };
+    postBySlug: {
+      // args
+      slug: string; // String!
     };
     postConnectionByCategoryId: {
       // args
@@ -244,6 +265,7 @@ export interface NexusGenInheritedFields {}
 export type NexusGenObjectNames =
   | 'Category'
   | 'Gallery'
+  | 'GalleryImage'
   | 'PageInfo'
   | 'Post'
   | 'PostConnection'

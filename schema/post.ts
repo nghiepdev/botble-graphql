@@ -22,7 +22,7 @@ export const Post = objectType({
     });
     t.list.field('categories', {
       type: 'Category',
-      resolve: (_, {categories}) => categories,
+      resolve: prop('categories'),
     });
   },
 });

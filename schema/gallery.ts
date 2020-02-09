@@ -1,4 +1,13 @@
 import {objectType} from 'nexus';
+import {prop} from 'ramda';
+
+const GalleryImage = objectType({
+  name: 'GalleryImage',
+  definition(t) {
+    t.string('medium');
+    t.string('full');
+  },
+});
 
 export const Gallery = objectType({
   name: 'Gallery',
@@ -10,5 +19,10 @@ export const Gallery = objectType({
       nullable: true,
     });
     t.string('image');
+    t.list.field('images', {
+      type: GalleryImage,
+      nullable: true,
+      resolve: prop('images'),
+    });
   },
 });

@@ -1,5 +1,5 @@
 import {queryField} from 'nexus';
-import {path} from 'ramda';
+import {prop, path} from 'ramda';
 
 import {limitArg, slugArg, idArg} from './arguments';
 
@@ -17,8 +17,8 @@ export const featuredListQuery = queryField(t => {
   });
 });
 
-export const lastestListQuery = queryField(t => {
-  t.list.field('lastestListing', {
+export const newestListQuery = queryField(t => {
+  t.list.field('newestListing', {
     type: 'Post',
     args: limitArg,
     resolve(_, {limit}, ctx) {
@@ -59,6 +59,14 @@ export const galleryListQuery = queryField(t => {
   });
 });
 
+export const postBySlug = queryField('postBySlug', {
+  type: 'Post',
+  args: slugArg,
+  resolve(_, {slug}, ctx) {
+    return ctx.client.get(`posts/${slug}`).then(path(['body', 'data']));
+  },
+});
+
 export const categoryBySlug = queryField('categoryBySlug', {
   type: 'Category',
   args: slugArg,
@@ -96,4 +104,18 @@ export const postConnectionByCategoryId = queryField(t => {
     },
     totalCount: () => 0,
   });
+});
+
+export const galleryBySlug = queryField('galleryBySlug', {
+  type: 'Gallery',
+  args: slugArg,
+  resolve(_, {slug}, ctx) {
+    return ctx.client
+      .get(`gallery/${slug}`)
+      .then(prop('body'))
+      .then(({data, images}) => ({
+        ...data,
+        images,
+      }));
+  },
 });
