@@ -2,7 +2,7 @@
   "name": "botble-graphql",
   "private": true,
   "version": "1.0.0",
-  "description": "Botble GraphQL",
+  "description": "The migration for Botble from Rest(Laravel) to GraphQL",
   "scripts": {
     "dev": "ts-node-dev --ignore-watch types.d.ts --no-notify --respawn --transpileOnly index.ts",
     "build": "tsc",
@@ -11,7 +11,7 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "got": "^10.4.0",
+    "got": "^10.5.5",
     "graphql": "^14.6.0",
     "graphql-iso-date": "^3.6.1",
     "graphql-yoga": "^1.18.3",
@@ -24,9 +24,9 @@
     "@types/got": "^9.6.9",
     "@types/graphql-iso-date": "^3.3.3",
     "@types/node": "^13.7.0",
-    "@types/ramda": "^0.26.40",
-    "@typescript-eslint/eslint-plugin": "^2.18.0",
-    "@typescript-eslint/parser": "^2.18.0",
+    "@types/ramda": "^0.26.41",
+    "@typescript-eslint/eslint-plugin": "^2.19.0",
+    "@typescript-eslint/parser": "^2.19.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
@@ -64,6 +64,6 @@
       "@commitlint/config-conventional"
     ]
   },
-  "author": "Nghiep <me@nghiepit.dev>",
+  "author": "Nghiep <me@nghiepit.dev>, <dev@12bay.vn>",
   "license": "ISC"
 }
