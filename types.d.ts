@@ -188,6 +188,7 @@ export interface NexusGenFieldTypes {
   };
   Query: {
     // field return type
+    author: string; // String!
     categoryBySlug: NexusGenRootTypes['Category']; // Category!
     featuredListing: NexusGenRootTypes['Post'][]; // [Post!]!
     galleryBySlug: NexusGenRootTypes['Gallery']; // Gallery!

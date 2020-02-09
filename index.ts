@@ -27,6 +27,7 @@ const server = new GraphQLServer({
   schema,
   context: {
     client,
+    __PROD__: process.env.NODE_ENV === 'production',
   },
 });
 

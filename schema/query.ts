@@ -119,3 +119,14 @@ export const galleryBySlug = queryField('galleryBySlug', {
       }));
   },
 });
+
+export const author = queryField('author', {
+  type: 'String',
+  resolve(_, args, ctx) {
+    if (ctx.__PROD__) {
+      return require('../../package.json').author;
+    }
+
+    return require('../package.json').author;
+  },
+});

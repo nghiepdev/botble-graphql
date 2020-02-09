@@ -122,6 +122,7 @@ type PostEdge {
 }
 
 type Query {
+  author: String!
   categoryBySlug(slug: String!): Category!
   featuredListing(
     """
