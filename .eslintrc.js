@@ -10,6 +10,7 @@ module.exports = {
   ],
   rules: {
     'prettier/prettier': 'error',
+    '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
   },
 };

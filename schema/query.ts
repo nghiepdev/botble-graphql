@@ -113,7 +113,7 @@ export const galleryBySlug = queryField('galleryBySlug', {
     return ctx.client
       .get(`gallery/${slug}`)
       .then(prop('body'))
-      .then(({data, images}) => ({
+      .then(({data, images}: any) => ({
         ...data,
         images,
       }));

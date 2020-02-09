@@ -3,7 +3,7 @@ import {compose, prop} from 'ramda';
 
 export const Post = objectType({
   name: 'Post',
-  definition(t) {
+  definition(t: any) {
     t.implements('Node');
     t.string('name');
     t.string('slug');

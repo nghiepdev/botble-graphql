@@ -24,6 +24,7 @@ export const schema = makeSchema({
 });
 
 const server = new GraphQLServer({
+  //@ts-ignore
   schema,
   context: {
     client,

@@ -11,7 +11,7 @@ const GalleryImage = objectType({
 
 export const Gallery = objectType({
   name: 'Gallery',
-  definition(t) {
+  definition(t: any) {
     t.implements('Node');
     t.string('name');
     t.string('slug');
