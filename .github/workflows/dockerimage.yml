@@ -26,3 +26,6 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           tags: 'latest,${{ env.APP_VERSION }}'
           buildargs: APP_VERSION
+
+      - name: Refresh Docker badge
+        run: wget --method=POST https://hooks.microbadger.com/images/nghiepit/botble-graphql/mXtVqDDfF9C-Fq6igYA9PZzEGUU= -O /dev/null || exit 0

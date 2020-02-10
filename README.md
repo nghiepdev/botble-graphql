@@ -27,13 +27,13 @@ $ yarn dev
 ## Build Docker image
 
 ```bash
-$ docker build --build-arg APP_VERSION=0.0.1 -t nghiepit/botble-graphql:0.0.1 .
+$ docker build --build-arg APP_VERSION=0.0.1 -t nghiepit/botble-graphql .
 ```
 
 ## Deploy Docker
 
 ```bash
-$ docker run --restart=unless-stopped -p 4000:4000 -d nghiepit/botble-graphql:0.0.1
+$ docker run --restart=unless-stopped -p 4000:4000 -d nghiepit/botble-graphql
 ```
 
 ## License
