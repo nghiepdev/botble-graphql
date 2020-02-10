@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "description": "The migration for Botble from Rest(Laravel) to GraphQL",
+  "homepage": "https://botble-graphql.toiyeulaptrinh.com",
   "scripts": {
     "dev": "ts-node-dev --ignore-watch types.d.ts --no-notify --respawn --transpileOnly index.ts",
     "build": "tsc",
@@ -41,7 +42,7 @@
   },
   "repository": {
     "type": "git+ssh",
-    "url": "git@github.com:botble/graphql.git"
+    "url": "git@github.com:nghiepit/botble-graphql.git"
   },
   "husky": {
     "hooks": {

@@ -4,6 +4,10 @@
 [![](https://images.microbadger.com/badges/version/nghiepit/botble-graphql.svg)](https://hub.docker.com/r/nghiepit/botble-graphql)
 
 > The migration for [Botble](https://botble.toiyeulaptrinh.com) from Rest(Laravel) to GraphQL
+>
+> GraphQL Playground: https://botble-graphql.toiyeulaptrinh.com
+>
+> Frontend Demo: https://graphql-next.toiyeulaptrinh.com
 
 ## Prerequisites
 
