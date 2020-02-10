@@ -1,7 +1,7 @@
 {
   "name": "botble-graphql",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The migration for Botble from Rest(Laravel) to GraphQL",
   "homepage": "https://botble-graphql.toiyeulaptrinh.com",
   "scripts": {
