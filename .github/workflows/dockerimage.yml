@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 1
 
       - name: Get the version
-        run: echo ::set-output name=APP_VERSION::${GITHUB_REF#refs/tags/}
+        run: echo ::set-env name=APP_VERSION::${GITHUB_REF#refs/tags/v}
 
       - name: Build and publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
@@ -24,5 +24,5 @@ jobs:
           name: nghiepit/botble-graphql
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          tag_names: true
+          tags: 'latest,${{ env.APP_VERSION }}'
           buildargs: APP_VERSION
