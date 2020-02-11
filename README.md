@@ -38,4 +38,4 @@ $ docker run --restart=unless-stopped -p 4000:4000 -d nghiepit/botble-graphql
 
 ## License
 
-[Nghiep] <me@nghiepit.dev>
+MIT © [Nghiep](https://nghiepit.dev)
