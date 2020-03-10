@@ -1,9 +1,12 @@
 import path from 'path';
-import {makeSchema, connectionPlugin} from 'nexus';
-import {GraphQLServer} from 'graphql-yoga';
+import express from 'express';
+import {ApolloServer} from 'apollo-server-express';
+import {makeSchema} from 'nexus';
 
+import client from './utils/client';
 import * as types from './schema';
-import {client} from './helpers/fetcher';
+const app = express();
+const __PORT__ = process.env.PORT || 4000;
 
 export const schema = makeSchema({
   types,
@@ -13,23 +16,25 @@ export const schema = makeSchema({
     typegen: path.join(__dirname, './types.d.ts'),
   },
   prettierConfig: path.join(__dirname.replace(/\/dist$/, ''), './.prettierrc'),
-  plugins: [
-    connectionPlugin({
-      includeNodesField: true,
-      extendConnection: {
-        totalCount: {type: 'Int'},
-      },
-    }),
-  ],
 });
 
-const server = new GraphQLServer({
-  //@ts-ignore
+const server = new ApolloServer({
   schema,
-  context: {
-    client,
-    __PROD__: process.env.NODE_ENV === 'production',
+  context(context): object {
+    return {
+      ...context,
+      client,
+      __PROD__: process.env.NODE_ENV === 'production',
+    };
   },
+  introspection: true,
+  playground: true,
 });
+server.applyMiddleware({app, path: '/'});
 
-server.start(() => console.log('Server is running on http://localhost:4000'));
+app.listen({port: __PORT__}, () =>
+  // eslint-disable-next-line no-console
+  console.log(
+    `⚡⚡⚡ Server ready at http://localhost:${__PORT__}${server.graphqlPath}`,
+  ),
+);

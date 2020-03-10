@@ -7,7 +7,9 @@
 >
 > GraphQL Playground: https://botble-graphql.toiyeulaptrinh.com
 >
-> Frontend Demo: https://graphql-next.toiyeulaptrinh.com
+> Frontend repo: https://github.com/nghiepit/botble-graphql-next
+>
+> ![screenshots](screenshot.png)
 
 ## Prerequisites
 
@@ -27,7 +29,7 @@ $ yarn dev
 ## Build Docker image
 
 ```bash
-$ docker build --build-arg APP_VERSION=0.0.1 -t nghiepit/botble-graphql .
+$ docker build --build-arg APP_VERSION=0.0.1 -t nghiepit/botble-graphql:0.0.1 .
 ```
 
 ## Deploy Docker

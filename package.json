@@ -4,37 +4,31 @@
   "description": "The migration for Botble from Rest(Laravel) to GraphQL",
   "homepage": "https://botble-graphql.toiyeulaptrinh.com",
   "scripts": {
-    "dev": "ts-node-dev --ignore-watch types.d.ts --no-notify --respawn --transpileOnly index.ts",
+    "dev": "ts-node-dev --no-notify --respawn --transpileOnly index.ts",
     "build": "tsc",
     "start": "NODE_ENV=production node dist",
     "lint": "eslint --ignore-path .gitignore --ignore-path .prettierignore",
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "got": "^10.5.5",
+    "apollo-server-express": "^2.11.0",
+    "got": "^10.6.0",
     "graphql": "^14.6.0",
     "graphql-iso-date": "^3.6.1",
-    "graphql-yoga": "^1.18.3",
-    "nexus": "^0.12.0-rc.9",
+    "nexus": "^0.12.0-rc.13",
     "ramda": "^0.27.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.3.4",
-    "@types/got": "^9.6.9",
-    "@types/graphql-iso-date": "^3.3.3",
-    "@types/node": "^13.7.0",
-    "@types/ramda": "^0.26.41",
-    "@typescript-eslint/eslint-plugin": "^2.19.0",
-    "@typescript-eslint/parser": "^2.19.0",
+    "@typescript-eslint/eslint-plugin": "^2.23.0",
+    "@typescript-eslint/parser": "^2.23.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
-    "husky": "^4.2.1",
-    "lint-staged": "^10.0.7",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.8",
     "prettier": "^1.19.1",
     "ts-node-dev": "^1.0.0-pre.44",
-    "typescript": "^3.7.5"
+    "typescript": "^3.8.3"
   },
   "engines": {
     "node": ">= 13.3.0"
@@ -45,12 +39,11 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "*.{md,json,yml,graphql}": [
+    "*.{md,json,yml}": [
       "prettier --write",
       "git add"
     ],
@@ -59,11 +52,6 @@
       "git add"
     ]
   },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
   "author": "Nghiep <me@nghiepit.dev>, <dev@12bay.vn>",
-  "license": "ISC"
+  "license": "MIT"
 }

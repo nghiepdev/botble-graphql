@@ -3,7 +3,7 @@
  * Do not make changes to this file directly
  */
 
-import {core, connectionPluginCore} from 'nexus';
+import {core} from 'nexus';
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     date<FieldName extends string>(
@@ -40,15 +40,6 @@ declare global {
       fieldName: FieldName,
       ...opts: core.ScalarOutSpread<TypeName, FieldName>
     ): void; // "DateTime";
-    connectionField<FieldName extends string>(
-      fieldName: FieldName,
-      config: connectionPluginCore.ConnectionFieldConfig<
-        TypeName,
-        FieldName
-      > & {
-        totalCount: core.SubFieldResolver<TypeName, FieldName, 'totalCount'>;
-      },
-    ): void;
   }
 }
 
@@ -81,13 +72,6 @@ export interface NexusGenRootTypes {
     full: string; // String!
     medium: string; // String!
   };
-  PageInfo: {
-    // root type
-    endCursor?: string | null; // String
-    hasNextPage: boolean; // Boolean!
-    hasPreviousPage: boolean; // Boolean!
-    startCursor?: string | null; // String
-  };
   Post: {
     // root type
     content?: string | null; // String
@@ -97,18 +81,6 @@ export interface NexusGenRootTypes {
     name: string; // String!
     slug: string; // String!
   };
-  PostConnection: {
-    // root type
-    edges?: Array<NexusGenRootTypes['PostEdge'] | null> | null; // [PostEdge]
-    nodes: NexusGenRootTypes['Post'][]; // [Post!]!
-    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
-    totalCount: number; // Int!
-  };
-  PostEdge: {
-    // root type
-    cursor: string; // String!
-    node: NexusGenRootTypes['Post']; // Post!
-  };
   Query: {};
   Tag: {
     // root type
@@ -117,6 +89,7 @@ export interface NexusGenRootTypes {
     name: string; // String!
     slug: string; // String!
   };
+  CreatedAt: NexusGenRootTypes['Post'];
   Node:
     | NexusGenRootTypes['Category']
     | NexusGenRootTypes['Post']
@@ -156,13 +129,6 @@ export interface NexusGenFieldTypes {
     full: string; // String!
     medium: string; // String!
   };
-  PageInfo: {
-    // field return type
-    endCursor: string | null; // String
-    hasNextPage: boolean; // Boolean!
-    hasPreviousPage: boolean; // Boolean!
-    startCursor: string | null; // String
-  };
   Post: {
     // field return type
     categories: NexusGenRootTypes['Category'][]; // [Category!]!
@@ -174,30 +140,17 @@ export interface NexusGenFieldTypes {
     name: string; // String!
     slug: string; // String!
   };
-  PostConnection: {
-    // field return type
-    edges: Array<NexusGenRootTypes['PostEdge'] | null> | null; // [PostEdge]
-    nodes: NexusGenRootTypes['Post'][]; // [Post!]!
-    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
-    totalCount: number; // Int!
-  };
-  PostEdge: {
-    // field return type
-    cursor: string; // String!
-    node: NexusGenRootTypes['Post']; // Post!
-  };
   Query: {
     // field return type
     author: string; // String!
     categoryBySlug: NexusGenRootTypes['Category']; // Category!
-    featuredListing: NexusGenRootTypes['Post'][]; // [Post!]!
-    galleryBySlug: NexusGenRootTypes['Gallery']; // Gallery!
-    galleryListing: NexusGenRootTypes['Gallery'][]; // [Gallery!]!
-    newestListing: NexusGenRootTypes['Post'][]; // [Post!]!
-    postBySlug: NexusGenRootTypes['Post']; // Post!
-    postConnectionByCategoryId: NexusGenRootTypes['PostConnection']; // PostConnection!
-    postsByCategoryId: NexusGenRootTypes['Post'][]; // [Post!]!
-    recentListing: NexusGenRootTypes['Post'][]; // [Post!]!
+    featuredList: NexusGenRootTypes['Post'][]; // [Post!]!
+    gallery: NexusGenRootTypes['Gallery']; // Gallery!
+    galleryList: NexusGenRootTypes['Gallery'][]; // [Gallery!]!
+    newestList: NexusGenRootTypes['Post'][]; // [Post!]!
+    post: NexusGenRootTypes['Post']; // Post!
+    posts: NexusGenRootTypes['Post'][]; // [Post!]!
+    recentList: NexusGenRootTypes['Post'][]; // [Post!]!
   };
   Tag: {
     // field return type
@@ -205,6 +158,10 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     name: string; // String!
     slug: string; // String!
+  };
+  CreatedAt: {
+    // field return type
+    createdAt: any; // DateTime!
   };
   Node: {
     // field return type
@@ -218,39 +175,31 @@ export interface NexusGenArgTypes {
       // args
       slug: string; // String!
     };
-    featuredListing: {
+    featuredList: {
       // args
       limit?: number | null; // Int
     };
-    galleryBySlug: {
+    gallery: {
       // args
       slug: string; // String!
     };
-    galleryListing: {
+    galleryList: {
       // args
       limit?: number | null; // Int
     };
-    newestListing: {
+    newestList: {
       // args
       limit?: number | null; // Int
     };
-    postBySlug: {
+    post: {
       // args
       slug: string; // String!
     };
-    postConnectionByCategoryId: {
-      // args
-      after?: string | null; // String
-      before?: string | null; // String
-      first?: number | null; // Int
-      id: number; // Int!
-      last?: number | null; // Int
-    };
-    postsByCategoryId: {
+    posts: {
       // args
       id: number; // Int!
     };
-    recentListing: {
+    recentList: {
       // args
       limit?: number | null; // Int
     };
@@ -258,6 +207,7 @@ export interface NexusGenArgTypes {
 }
 
 export interface NexusGenAbstractResolveReturnTypes {
+  CreatedAt: 'Post';
   Node: 'Category' | 'Post' | 'Gallery' | 'Tag';
 }
 
@@ -267,10 +217,7 @@ export type NexusGenObjectNames =
   | 'Category'
   | 'Gallery'
   | 'GalleryImage'
-  | 'PageInfo'
   | 'Post'
-  | 'PostConnection'
-  | 'PostEdge'
   | 'Query'
   | 'Tag';
 
@@ -278,7 +225,7 @@ export type NexusGenInputNames = never;
 
 export type NexusGenEnumNames = never;
 
-export type NexusGenInterfaceNames = 'Node';
+export type NexusGenInterfaceNames = 'CreatedAt' | 'Node';
 
 export type NexusGenScalarNames =
   | 'Boolean'

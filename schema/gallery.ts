@@ -1,5 +1,7 @@
-import {objectType} from 'nexus';
+import {objectType, queryField} from 'nexus';
 import {prop} from 'ramda';
+
+import {limitArg, slugArg} from './arguments';
 
 const GalleryImage = objectType({
   name: 'GalleryImage',
@@ -24,5 +26,29 @@ export const Gallery = objectType({
       nullable: true,
       resolve: prop('images'),
     });
+  },
+});
+
+export const galleryList = queryField('galleryList', {
+  type: 'Gallery',
+  list: true,
+  args: limitArg,
+  resolve(_, {limit}, ctx) {
+    return ctx.client
+      .get('gallery/featured', {
+        searchParams: {limit},
+      })
+      .then(prop('data'));
+  },
+});
+
+export const gallery = queryField('gallery', {
+  type: 'Gallery',
+  args: slugArg,
+  resolve(_, {slug}, ctx) {
+    return ctx.client.get(`gallery/${slug}`).then(({data, images}: any) => ({
+      ...data,
+      images,
+    }));
   },
 });
